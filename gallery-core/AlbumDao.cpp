@@ -1,5 +1,4 @@
 
-
 #include "AlbumDao.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
