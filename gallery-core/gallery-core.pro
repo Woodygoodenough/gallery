@@ -1,3 +1,4 @@
+QT += sql
 QT -= gui
 
 TEMPLATE = lib
@@ -10,16 +11,19 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    DatabaseManager.cpp \
+    Picture.cpp \
     album.cpp
 
 HEADERS += \
+    DatabaseManager.h \
+    Picture.h \
     gallery-core_global.h \
     album.h
 
 # Default rules for deployment.
-unix {
-    target.path = /usr/lib
-}
+target.path = /usr/lib
+
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
