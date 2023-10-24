@@ -1,6 +1,7 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 #include <QString>
+#include "AlbumDao.h"
 
 class QSqlDatabase;
 
@@ -18,6 +19,8 @@ protected:
 
 private:
     QSqlDatabase* mDatabase;
+public:
+    const AlbumDao albumDao;
 };
 
 #endif // DATABASEMANAGER_H
