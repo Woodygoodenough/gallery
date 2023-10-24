@@ -14,12 +14,14 @@ SOURCES += \
     AlbumDao.cpp \
     DatabaseManager.cpp \
     Picture.cpp \
+    PictureDao.cpp \
     album.cpp
 
 HEADERS += \
     AlbumDao.h \
     DatabaseManager.h \
     Picture.h \
+    PictureDao.h \
     gallery-core_global.h \
     album.h
 

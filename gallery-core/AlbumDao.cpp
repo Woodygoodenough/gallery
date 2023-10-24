@@ -27,6 +27,23 @@ void AlbumDao::addAlbum(Album& album) const
     album.setId(query.lastInsertId().toInt()); // note how QSqlQuery serves not just an executor: it also maitains state.
 }
 
+void AlbumDao::updateAlbum(const Album& album) const
+{
+    QSqlQuery query(mDatabase);
+    query.prepare("UPDATE albums SET name=:name WHERE id=:id");
+    query.bindValue(":name", album.name());
+    query.bindValue(":id", album.id());
+    query.exec();
+}
+
+void AlbumDao::removeAlbum(int id) const
+{
+    QSqlQuery query(mDatabase);
+    query.prepare("DELETE FROM albums WHERE id=:id");
+    query.bindValue(":id", id);
+    query.exec();
+}
+
 QVector<Album*> AlbumDao::albums() const
 {
     QSqlQuery query("SELECT * FROM albums", mDatabase);
