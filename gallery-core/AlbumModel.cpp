@@ -29,3 +29,13 @@ QVariant AlbumModel::data(const QModelIndex& index, int role) const {
             return QVariant();
         }
     }
+
+QModelIndex AlbumModel::addAlbum(const Album& album) {
+    int rowIndex = rowCount();
+    beginInsertRows(QModelIndex(), rowIndex, rowIndex);
+    auto newAlbum = std::make_unique<Album>(album);
+    mDb.albumDao.addAlbum(*newAlbum);
+    mAlbums->push_back(move(newAlbum));
+    endInsertRows();
+    return index(rowIndex, 0);
+    }
