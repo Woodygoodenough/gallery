@@ -12,6 +12,7 @@ CONFIG += c++17
 
 SOURCES += \
     AlbumDao.cpp \
+    AlbumModel.cpp \
     DatabaseManager.cpp \
     Picture.cpp \
     PictureDao.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 
 HEADERS += \
     AlbumDao.h \
+    AlbumModel.h \
     DatabaseManager.h \
     Picture.h \
     PictureDao.h \
