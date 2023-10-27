@@ -31,9 +31,12 @@ void ThumbnailProxyModel::setSourceModel(QAbstractItemModel* sourceModel)
         reloadThumbnails();
     });
 
-    connect(sourceModel, &QAbstractItemModel::rowsInserted, [this](const QModelIndex& parent, int first, int last) {
-        generateThumbnails(index(first, 0), last - first + 1);
-    });
+    connect(sourceModel,
+            &QAbstractItemModel::rowsInserted,
+            [this](const QModelIndex &parent, int first, int last) {
+                Q_UNUSED(parent);
+                generateThumbnails(index(first, 0), last - first + 1);
+            });
 }
 
 PictureModel* ThumbnailProxyModel::pictureModel() const
@@ -57,7 +60,8 @@ void ThumbnailProxyModel::generateThumbnails(const QModelIndex& startIndex, int 
     const QAbstractItemModel* model = startIndex.model();
     int lastIndex = startIndex.row() + count;
     for(int row = startIndex.row(); row < lastIndex; row++) {
-        QString filepath = model->data(model->index(row, 0), PictureModel::Roles::FilePathRole).toString();
+        QString filepath
+            = model->data(model->index(row, 0), PictureModel::PictureRole::FilePathRole).toString();
         QPixmap pixmap(filepath);
         auto thumbnail = new QPixmap(pixmap
                                          .scaled(THUMBNAIL_SIZE, THUMBNAIL_SIZE,
