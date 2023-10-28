@@ -13,15 +13,21 @@ PictureModel::PictureModel(const AlbumModel& albumModel, QObject* parent) :
 
 
 QModelIndex PictureModel::addPicture(const Picture& picture) {
+    qDebug() << "enter add Picture";
     if (picture.albumId() != mAlbumId) {
+        qDebug() << "albumId:   " << picture.albumId();
+        qDebug() << "mAlbumId:  " << picture.albumId();
+        qDebug() << "albumId not valid";
         return QModelIndex();
-        }
+    }
+    qDebug() << "albumId() valid";
     int rowIndex = rowCount();
     beginInsertRows(QModelIndex(), rowIndex, rowIndex);
     auto newPicture = std::make_unique<Picture>(Picture(picture));
     mDb.pictureDao.addPicture(mAlbumId, *newPicture);
     mPictures->push_back(std::move(newPicture));
     endInsertRows();
+    qDebug() << "finish add Picture";
     return index(rowIndex, 0);
     }
 
@@ -57,6 +63,7 @@ bool PictureModel::removeRows(int row, int count, const QModelIndex& parent) {
         mPictures->begin() + row + count);
     mDb.pictureDao.removePicturesForAlbum(mAlbumId);
     endRemoveRows();
+    return true;
     }
 
 void PictureModel::setAlbumId(int albumId) {

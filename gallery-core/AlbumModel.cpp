@@ -35,7 +35,7 @@ QModelIndex AlbumModel::addAlbum(const Album& album) {
     beginInsertRows(QModelIndex(), rowIndex, rowIndex);
     auto newAlbum = std::make_unique<Album>(album);
     mDb.albumDao.addAlbum(*newAlbum);
-    mAlbums->push_back(move(newAlbum));
+    mAlbums->push_back(std::move(newAlbum));
     endInsertRows();
     return index(rowIndex, 0);
     }
