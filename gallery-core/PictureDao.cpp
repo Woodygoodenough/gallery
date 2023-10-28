@@ -1,31 +1,31 @@
 #include "PictureDao.h"
-#include "Picture.h"
-#include "album.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QVariant>
+#include "DatabaseManager.h"
+#include "Picture.h"
 PictureDao::PictureDao(QSqlDatabase& database) : mDatabase(database) {
     }
 void PictureDao::init() const {
     if (!mDatabase.tables().contains("pictures")) {
         QSqlQuery query(mDatabase);
-        query.exec(QString("CREATE TABLE picturs ") +
-            "(" +
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "fileurl TEXT, " +
-            "albumid INTEGER" + ")");
-        }
+        query.exec(QString("CREATE TABLE pictures ") + "(" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                   + "fileurl TEXT, " + "albumid INTEGER" + ")");
     }
+}
 
-void PictureDao::addPicture(int albumId, Picture& picture) const {
+void PictureDao::addPicture(int albumId, Picture &picture) const
+{
     QSqlQuery query(mDatabase);
-    query.prepare("INSERT INTO pictures (fileurl, albumid) VALUES (:fileurl, :albumid)");
-    query.bindValue(":fileurl", picture.fileUrl());
+    query.prepare(QString("INSERT INTO pictures") + " (albumid, fileurl)" + " VALUES ("
+                  + ":albumid, " + ":fileurl" + ")");
     query.bindValue(":albumid", albumId);
+    query.bindValue(":fileurl", picture.fileUrl());
     query.exec();
+    DatabaseManager::debugQuery(query);
     picture.setId(query.lastInsertId().toInt());
     picture.setAlbumId(albumId);
-    }
+}
 
 void PictureDao::removePicture(int id) const {
     QSqlQuery query(mDatabase);

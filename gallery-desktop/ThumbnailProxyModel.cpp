@@ -60,8 +60,10 @@ void ThumbnailProxyModel::generateThumbnails(const QModelIndex& startIndex, int 
     const QAbstractItemModel* model = startIndex.model();
     int lastIndex = startIndex.row() + count;
     for(int row = startIndex.row(); row < lastIndex; row++) {
+        qDebug() << "row: " << row;
         QString filepath
             = model->data(model->index(row, 0), PictureModel::PictureRole::FilePathRole).toString();
+        qDebug() << "filepath" << filepath;
         QPixmap pixmap(filepath);
         auto thumbnail = new QPixmap(pixmap
                                          .scaled(THUMBNAIL_SIZE, THUMBNAIL_SIZE,
