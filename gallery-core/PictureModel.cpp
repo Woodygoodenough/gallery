@@ -19,7 +19,6 @@ QModelIndex PictureModel::addPicture(const Picture& picture) {
     mDb.pictureDao.addPicture(mAlbumId, *newPicture);
     mPictures->push_back(std::move(newPicture));
     endInsertRows();
-    //qDebug() << "In PictureModel::addPicture, finish add Picture";
     return index(rowIndex, 0);
     }
 

@@ -13,7 +13,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , mGalleryWidget(new GalleryWidget(this))
+    , mGalleryWidget(new GalleryWidget(this))   //set up child widget from parent one
     , mPictureWidget(new PictureWidget(this))
     , mStackedWidget(new QStackedWidget(this))
 {
